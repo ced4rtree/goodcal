@@ -33,7 +33,7 @@ int main(void) {
     int window_height = window_height_opt.value();
 
     initscr();
-    WINDOW *window = newwin(window_height, WINDOW_WIDTH, 0, 0);
+    WINDOW *window = newwin(window_height, WINDOW_WIDTH, LINES/2-window_height/2, COLS/2-WINDOW_WIDTH/2);
     noecho(); // don't print keybord inputs
     start_color();
     refresh();
