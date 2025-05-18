@@ -59,23 +59,33 @@ int main(void) {
         for (int day = 1; day <= days_in_month(now); day++) {
             // offset to account for the month not starting on Sunday
             int day_offset = day + first_day_of_month(now).c_encoding();
+
+            // to make floor(n/7) still fit the last weekday on
+            // saturday instead of moving to the next row, where n is
+            // the cell being focused
             double weekdays_more = DAYS_IN_WEEK + 0.00001;
             if (day == selected_day) {
                 wattron(window, A_REVERSE);
-                // attron(A_BLINK);
             }
+
+            if (day == static_cast<unsigned>(now.day())) {
+                wattron(window, A_UNDERLINE);
+            }
+
             mvwprintw(
                 window,
+                // cell's y position
                 std::floor(day_offset / weekdays_more)
                     * LINE_HEIGHT + HEADER_HEIGHT
                     + BORDER_WIDTH + LINE_HEIGHT,
+                // cell's x position
                 DAY_WIDTH * (day_offset % (int)DAYS_IN_WEEK == 0
                              ? DAYS_IN_WEEK
                              : day_offset % (int)DAYS_IN_WEEK),
                 "%d", day
             );
             wattroff(window, A_REVERSE);
-            // attroff(A_BLINK);
+            wattroff(window, A_UNDERLINE);
         }
 
         // Handle key processing
