@@ -9,10 +9,11 @@ inline std::chrono::year_month_day current_date() {
 
 // returns the amount of days in the provided date
 // can return empty optional if the date has an invalid month
-constexpr std::optional<unsigned int> days_in_month(std::chrono::year_month_day date) {
+constexpr std::optional<unsigned int> days_in_month(
+    std::chrono::year_month_day date) {
     unsigned int month_index = static_cast<unsigned>(date.month());
-    int year = static_cast<int>(date.year());
-    bool is_leap_year = year % 4 == 0;
+    int year                 = static_cast<int>(date.year());
+    bool is_leap_year        = year % 4 == 0;
 
     switch (month_index) {
     case 1:
@@ -50,8 +51,10 @@ constexpr std::optional<unsigned int> days_in_month(std::chrono::year_month_day 
 
 // returns the weekday that the first day of the month in the provided date
 // starts on
-constexpr std::chrono::weekday first_day_of_month(std::chrono::year_month_day date) {
-    std::chrono::year_month_day first_day =
-        std::chrono::year_month(date.year(), date.month()) / std::chrono::day(1);
+constexpr std::chrono::weekday first_day_of_month(
+    std::chrono::year_month_day date) {
+    std::chrono::year_month_day first_day
+        = std::chrono::year_month(date.year(), date.month())
+          / std::chrono::day(1);
     return std::chrono::weekday(first_day);
 }

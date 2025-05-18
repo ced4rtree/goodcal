@@ -1,3 +1,11 @@
+Language: Cpp
+AlignOperands: true
+BreakBeforeBinaryOperators: true
 IndentWidth: 4
 AccessModifierOffset: -4
 AllowShortFunctionsOnASingleLine: false
+PointerAlignment: Left
+AlignAfterOpenBracket: DontAlign
+BreakBeforeBraces: Attach
+ContinuationIndentWidth: 4
+AlignConsecutiveAssignments: Consecutive

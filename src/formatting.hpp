@@ -1,9 +1,9 @@
 #pragma once
 
 #include "date.hpp"
-#include <string>
 #include <chrono>
 #include <cmath>
+#include <string>
 
 // how tall each row should be
 constexpr const int LINE_HEIGHT = 2;
@@ -12,7 +12,7 @@ constexpr const int LINE_HEIGHT = 2;
 constexpr const int DAY_WIDTH = 4;
 
 // two extra days for padding
-constexpr const int WINDOW_WIDTH = DAY_WIDTH * 9;
+constexpr const int CAL_WINDOW_WIDTH = DAY_WIDTH * 9;
 
 // how many days are in a week
 constexpr const double DAYS_IN_WEEK = 7.0;
@@ -25,7 +25,8 @@ constexpr const int BORDER_WIDTH = 1;
 
 // return how tall the calendar should be in units of cells
 // can return empty optional if the supplied date has an invalid month index
-constexpr std::optional<int> calculate_window_height(std::chrono::year_month_day date) {
+constexpr std::optional<int> calculate_window_height(
+    std::chrono::year_month_day date) {
     std::optional<unsigned int> month_days_opt = days_in_month(date);
     if (!month_days_opt.has_value()) {
         return {};
@@ -33,8 +34,7 @@ constexpr std::optional<int> calculate_window_height(std::chrono::year_month_day
     unsigned int month_days = month_days_opt.value();
     month_days += first_day_of_month(date).c_encoding();
 
-    return (std::ceil(month_days / DAYS_IN_WEEK) + HEADER_HEIGHT)
-           * LINE_HEIGHT
+    return (std::ceil(month_days / DAYS_IN_WEEK) + HEADER_HEIGHT) * LINE_HEIGHT
            + BORDER_WIDTH;
 }
 
@@ -43,13 +43,18 @@ constexpr std::optional<int> calculate_window_height(std::chrono::year_month_day
 // We Th Fr Sa "
 constexpr std::string format_week(unsigned int day_width) {
     std::string days[] = {
-        "Sunday",   "Monday", "Tuesday",  "Wednesday",
-        "Thursday", "Friday", "Saturday",
+        "Sunday",
+        "Monday",
+        "Tuesday",
+        "Wednesday",
+        "Thursday",
+        "Friday",
+        "Saturday",
     };
     std::string ret = "";
 
     int max_length = day_width - 1;
-    for (const std::string &day : days) {
+    for (const std::string& day : days) {
         if (max_length < day.size()) {
             ret += day.substr(0, max_length) + " ";
         } else {
